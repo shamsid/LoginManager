@@ -9,9 +9,6 @@ import com.shamsid.sociallogin.models.User;
 import com.shamsid.sociallogin.utils.Helper;
 import com.shamsid.sociallogin.utils.Platforms;
 
-/**
- * Created by shamsheR on 12/02/17.
- */
 
 public class LoginManager  {
 
@@ -58,6 +55,7 @@ public class LoginManager  {
       case FACEBOOK:
         Intent facebookIntent = new Intent (mAppContext, FacebookActivity.class);
         facebookIntent.addFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
+        Log.v ("status","started:facebook");
         mAppContext.startActivity (facebookIntent);
         break;
 
@@ -67,6 +65,7 @@ public class LoginManager  {
         googlePlusIntent.putExtra (Helper.CLIENT_ID,getClientId ());
         mAppContext.startActivity (googlePlusIntent);
         break;
+
     }
     return this;
   }
@@ -81,6 +80,7 @@ public class LoginManager  {
   }
 
   public User getUserInfo(){
+
 
     return this.mUser;
   }
