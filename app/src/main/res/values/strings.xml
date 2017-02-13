@@ -1,0 +1,8 @@
+<resources>
+	<string name="app_name">LoginManager</string>
+	<string name="facebook_app_id">239900076419469</string>
+
+	<string name="fb_login_protocol_scheme">fb239900076419469</string>
+	<string name="google_app_id">AIzaSyBb__LIXSFpaDvroDX9q0KhFvOmHGxZDmU</string>
+
+</resources>

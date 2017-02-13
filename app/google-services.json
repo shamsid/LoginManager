@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1022271492138",
+    "project_id": "firebase-loginmanager"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1022271492138:android:9054999dbea1509c",
+        "android_client_info": {
+          "package_name": "com.shamsid.loginmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1022271492138-8h1q1drinibfdo4mpmo4ih13c3ov8br4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shamsid.loginmanager",
+            "certificate_hash": "EBC40BDF57EC2DB54B0903EEFA63D1DC36C17D2B"
+          }
+        },
+        {
+          "client_id": "1022271492138-5tqamktllbf87ob75lh23lvivjm9plaj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBb__LIXSFpaDvroDX9q0KhFvOmHGxZDmU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
