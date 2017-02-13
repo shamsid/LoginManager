@@ -1,7 +1,29 @@
 ###Login Manager
+[![Release](https://jitpack.io/v/shamsid/LoginManager.svg)](https://jitpack.io/#shamsid/LoginManager)
+
 This android library will reduce the boiler plate code while using social logins in Android Application.
 #### Setup 
 To use this library your minSdkVersion should be 16 or above.
+
+- In your project level build.gradle file add the following code
+
+```java
+allprojects {
+    repositories {
+        ...
+        maven { url "https://jitpack.io" }
+    }
+}
+```
+
+- In your app level build.gradle file add this line
+
+```java
+dependencies {
+	        compile 'com.github.shamsid:LoginManager:v1'
+	}
+```
+
 ###Usage 
 ####Step 1:
 You must setup the AndroidManifest.xml for facebook and google login to use this libraryadfdi
@@ -53,6 +75,7 @@ public class LoginManagerActivity extends Activity {
     setContentView (R.layout.activity_login_manager);
     findViewById (R.id.tv_facebook).setOnClickListener (new View.OnClickListener () {
       @Override public void onClick (View v) {
+    
         loginFacebook();
       }
     });
@@ -65,31 +88,36 @@ public class LoginManagerActivity extends Activity {
 
   }
 
-  private void loginFacebook(){
+   private void loginFacebook(){
+    try {
 
-    loginManager = LoginManager.getInstance (this)
-        .choose (Platforms.FACEBOOK)
-        .login ();
+      loginManager = LoginManager.getInstance (this).choose (Platforms.FACEBOOK).login ();
 
-    Log.v ("name",loginManager.getUserInfo ().getFullName ());
-    Log.v ("profile_url",loginManager.getUserInfo ().getUserProfileUrl ());
-    Log.v ("name",loginManager.getUserInfo ().getEmailAddress ());
-    Log.v ("name",loginManager.getUserInfo ().getId ());
+      Log.v ("name", loginManager.getUserInfo ().getFullName ());
+      Log.v ("profile_url", loginManager.getUserInfo ().getUserProfileUrl ());
+      Log.v ("name", loginManager.getUserInfo ().getEmailAddress ());
+      Log.v ("name", loginManager.getUserInfo ().getId ());
+    }catch (SocialPlatformNotFound error ){
+      error.printStackTrace ();
+    }
   }
 
   private void loginGooglePlus(){
+    try {
+      loginManager = LoginManager.getInstance (this)
+          .setClientId (getResources ().getString (R.string.google_app_id))
+          .choose (Platforms.GOOGLE_PLUS)
+          .login ();
 
-    loginManager = LoginManager.getInstance (this)
-        .setClientId (getResources ().getString (R.string.google_app_id))
-        .choose (Platforms.GOOGLE_PLUS)
-        .login ();
-
-    Log.v ("name",loginManager.getUserInfo ().getFullName ());
-    Log.v ("profile_url",loginManager.getUserInfo ().getUserProfileUrl ());
-    Log.v ("name",loginManager.getUserInfo ().getEmailAddress ());
-    Log.v ("name",loginManager.getUserInfo ().getId ());
+      Log.v ("name", loginManager.getUserInfo ().getFullName ());
+      Log.v ("profile_url", loginManager.getUserInfo ().getUserProfileUrl ());
+      Log.v ("name", loginManager.getUserInfo ().getEmailAddress ());
+      Log.v ("name", loginManager.getUserInfo ().getId ());
+    }catch (SocialPlatformNotFound error){
+      error.printStackTrace ();
+    }
   }
-}
+  
 ```
 ##License
 ```
