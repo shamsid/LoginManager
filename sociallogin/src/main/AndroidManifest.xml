@@ -12,8 +12,7 @@
 
 
 
-		<activity android:name=".FacebookActivity"
-				android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"/>
+		<activity android:name=".FacebookActivity"/>
 		<activity android:name=".GooglePlusActivity"
 				/>
 
