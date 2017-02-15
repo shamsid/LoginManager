@@ -2,7 +2,22 @@ package com.shamsid.sociallogin.models;
 
 import java.io.Serializable;
 
-public class User  implements Serializable ,Cloneable{
+public class Profile implements Serializable ,Cloneable{
+
+  public Profile (Profile profile){
+    this.fullName = profile.getFullName ();
+    this.emailAddress = profile.getEmailAddress ();
+    this.accessToken = profile.getAccessToken ();
+    this.userProfileUrl = profile.getUserProfileUrl ();
+  }
+  public Profile (){
+  }
+  private String id;
+  private String userProfileUrl;
+  private String accessToken;
+  private String emailAddress;
+  private String fullName;
+
   public String getId () {
     return id;
   }
@@ -10,12 +25,6 @@ public class User  implements Serializable ,Cloneable{
   public void setId (String id) {
     this.id = id;
   }
-
-  private String id;
-  private String userProfileUrl;
-  private String accessToken;
-  private String emailAddress;
-  private String fullName;
 
   public String getEmailAddress () {
     return emailAddress;

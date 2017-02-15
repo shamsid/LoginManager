@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="vertical"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+	<android.support.v7.widget.CardView
+			android:layout_width="match_parent"
+			android:layout_height="200dp"
+			android:layout_margin="10dp"
+			>
+		<ImageView
+				android:id="@+id/img_profile_url"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				/>
+		<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="UserName"
+				android:layout_gravity="bottom"
+				android:padding="10dp"
+				android:textSize="20dp"
+				android:fontFamily="@string/abc_font_family_button_material"
+				android:textColor="@color/com_facebook_device_auth_text"
+				/>
+	</android.support.v7.widget.CardView>
+
+</LinearLayout>
