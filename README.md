@@ -20,6 +20,7 @@ dependencies {
 ```
 
 - In your app level build.gradle file add this line
+
 ```java
 apply plugin: 'me.tatarka.retrolambda'
 dependencies {
@@ -27,6 +28,7 @@ dependencies {
 	}
 ```
 ### Usage 
+Let see how to set up the social login .
 
 #### Step 1:
 - You must setup the AndroidManifest.xml for social login which you want to use.
