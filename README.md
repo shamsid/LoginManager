@@ -30,9 +30,12 @@ dependencies {
 
 #### Step 1:
 - You must setup the AndroidManifest.xml for social login which you want to use.
+
 ```xml 
+
 <uses-permission android:name="android.permission.INTERNET"/>
 ```
+
 1. Facebook
 
 ```xml
