@@ -8,16 +8,15 @@
 			android:supportsRtl="true"
 	>
 
-
-
-
-
 		<activity android:name=".FacebookActivity"
 				android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"/>
 		<activity android:name=".GooglePlusActivity"
+
 				android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"/>
-
-
+		<activity android:name=".TwitterActivity"
+				android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"/>
+		<activity android:name=".LinkedInActivity"
+				android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"/>
 
 	</application>
 

@@ -12,8 +12,13 @@
 			android:supportsRtl="true"
 			android:theme="@style/AppTheme">
 
-		<meta-data android:name="com.facebook.sdk.ApplicationId"
+		<meta-data
+				android:name="com.facebook.sdk.ApplicationId"
 				android:value="@string/facebook_app_id"/>
+		<meta-data
+				android:name="io.fabric.ApiKey"
+				android:value="@string/fabric_api"
+				/>
 
 		<activity android:name=".LoginManagerActivity">
 			<intent-filter>
@@ -23,26 +28,28 @@
 			</intent-filter>
 		</activity>
 
-
-
-
-		<activity android:name="com.facebook.FacebookActivity"
+		<activity
+				android:name="com.facebook.FacebookActivity"
 				android:configChanges=
 						"keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-				android:label="@string/app_name" />
-
+				android:label="@string/app_name"/>
 
 		<activity
 				android:name="com.facebook.CustomTabActivity"
 				android:exported="true">
 			<intent-filter>
-				<action android:name="android.intent.action.VIEW" />
-				<category android:name="android.intent.category.DEFAULT" />
-				<category android:name="android.intent.category.BROWSABLE" />
-				<data android:scheme="@string/fb_login_protocol_scheme" />
+				<action android:name="android.intent.action.VIEW"/>
+
+				<category android:name="android.intent.category.DEFAULT"/>
+				<category android:name="android.intent.category.BROWSABLE"/>
+
+				<data android:scheme="@string/fb_login_protocol_scheme"/>
 			</intent-filter>
 		</activity>
 
+		<activity
+				android:name=".InfoActivity"
+				android:screenOrientation="portrait"/>
 
 	</application>
 

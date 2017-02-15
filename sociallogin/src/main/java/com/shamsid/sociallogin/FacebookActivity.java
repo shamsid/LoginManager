@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -13,7 +12,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.shamsid.sociallogin.models.User;
+import com.shamsid.sociallogin.models.Profile;
 import com.shamsid.sociallogin.utils.Helper;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,6 +49,7 @@ public class FacebookActivity extends Activity implements FacebookCallback<Login
 
   @Override
   public void onCancel () {
+    ;
     finish ();
 
   }
@@ -63,16 +63,22 @@ public class FacebookActivity extends Activity implements FacebookCallback<Login
   @Override
   public void onCompleted (JSONObject object, GraphResponse response){
     try{
-      User userInformation = new User ();
-      userInformation.setId (object.getString ("id"));
-      userInformation.setAccessToken (AccessToken.getCurrentAccessToken ().getToken ());
-      userInformation.setUserProfileUrl (String.format (Helper.FACEBOOK_USER_PROFILE,userInformation.getId ()));
-      userInformation.setEmailAddress (object.has ("email")?object.getString ("email"):"");
-      userInformation.setFullName (object.has ("name")?object.getString ("name"):"");
-      com.shamsid.sociallogin.LoginManager.getInstance (this).setUserInfo (userInformation);
+      Profile profileInformation = new Profile ();
+      profileInformation.setProfileId (object.getString ("id").toString ());
+
+
+      profileInformation.setAccessToken (AccessToken.getCurrentAccessToken ().getToken ());
+      profileInformation.setUserProfileUrl (String.format (Helper.FACEBOOK_USER_PROFILE,
+          profileInformation.getProfileId ()));
+      profileInformation.setEmailAddress (object.has ("email")?object.getString ("email"):"");
+      profileInformation.setFullName (object.has ("name")?object.getString ("name"):"");
+      profileInformation.setProfileId (profileInformation.getProfileId ());
+
+      com.shamsid.sociallogin.LoginManager.getInstance (this).onLoginSuccess (profileInformation);
+
 
     }catch(JSONException e){
-
+      com.shamsid.sociallogin.LoginManager.getInstance (this).onLoginError (e);
       e.printStackTrace ();
     }
     finally {

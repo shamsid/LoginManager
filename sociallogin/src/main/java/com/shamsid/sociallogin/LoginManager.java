@@ -1,22 +1,38 @@
 package com.shamsid.sociallogin;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import com.facebook.FacebookSdk;
-import com.shamsid.sociallogin.models.User;
+import com.shamsid.sociallogin.models.Profile;
 import com.shamsid.sociallogin.utils.Helper;
 import com.shamsid.sociallogin.utils.Platforms;
+import rx.Observable;
+import rx.subjects.PublishSubject;
 
-
-public class LoginManager  {
+public  class LoginManager {
 
   private Platforms mSocialPlatform;
   private Context mAppContext;
-  private static LoginManager instance;
-  private User mUser;
+
+  @SuppressLint("StaticFieldLeak") private static LoginManager instance;
+
+  private Profile mProfile = null;
   private String clientId;
+  private PublishSubject<Profile> userEmitter;
+
+  public String getClientSecretId () {
+    return clientSecretId;
+  }
+
+  public LoginManager setClientSecretId (String clientSecretId) {
+    this.clientSecretId = clientSecretId;
+    return this;
+  }
+
+  private String clientSecretId;
 
   public String getClientId () {
     return clientId;
@@ -27,61 +43,85 @@ public class LoginManager  {
     return this;
   }
 
-  private LoginManager(Context context){
+  private LoginManager (Context context) {
     mAppContext = context;
   }
 
-  public static synchronized LoginManager getInstance(Context context){
+  public static synchronized LoginManager getInstance (Context context) {
 
-    if(instance == null){
+    if (instance == null) {
       instance = new LoginManager (context);
     }
     return instance;
   }
 
-  public static void init(Application application){
+  public static void init (Application application) {
     FacebookSdk.sdkInitialize (application.getApplicationContext ());
+
   }
 
-  public LoginManager choose(Platforms platform){
-      this.mSocialPlatform = platform;
-      return this;
-  }
-
-  public LoginManager login() {
-
-    switch (mSocialPlatform) {
-
-      case FACEBOOK:
-        Intent facebookIntent = new Intent (mAppContext, FacebookActivity.class);
-        facebookIntent.addFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
-        Log.v ("status","started:facebook");
-        mAppContext.startActivity (facebookIntent);
-        break;
-
-      case GOOGLE_PLUS:
-        Intent googlePlusIntent = new Intent (mAppContext, GooglePlusActivity.class);
-        googlePlusIntent.addFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
-        googlePlusIntent.putExtra (Helper.CLIENT_ID,getClientId ());
-        mAppContext.startActivity (googlePlusIntent);
-        break;
-
-    }
+  public LoginManager choose (Platforms platform) {
+    this.mSocialPlatform = platform;
     return this;
   }
 
-  public  void setUserInfo(User user) {
-    try{
-      this.mUser = (User) user.clone ();
-      Log.v ("name",mUser.getFullName ());
-    }catch (CloneNotSupportedException e){
-      e.printStackTrace ();
+  public Observable<Profile> login () throws SocialPlatformNotFound {
+    userEmitter = PublishSubject.create ();
+    mAppContext.startActivity (getIntent ());
+    return userEmitter;
+  }
+
+  private Intent getIntent ()  throws SocialPlatformNotFound{
+    Intent socialIntent;
+    switch (mSocialPlatform) {
+
+      case FACEBOOK:
+        socialIntent = new Intent (mAppContext, FacebookActivity.class);
+        socialIntent.addFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
+        break;
+
+      case GOOGLE_PLUS:
+        socialIntent = new Intent (mAppContext, GooglePlusActivity.class);
+        socialIntent.addFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
+        socialIntent.putExtra (Helper.CLIENT_ID, getClientId ());
+        break;
+
+      case TWITTER:
+        socialIntent = new Intent (mAppContext,TwitterActivity.class);
+        socialIntent.addFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
+        socialIntent.putExtra (Helper.TWTITTER_CLIENT,getClientId ());
+        socialIntent.putExtra (Helper.TWITTER_CLIENT_SECRET,getClientSecretId());
+        break;
+
+      case LINKEDIN:
+        socialIntent = new Intent (mAppContext,LinkedInActivity.class);
+        socialIntent.addFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
+        break;
+
+      default:
+        throw new SocialPlatformNotFound ();
+    }
+    return socialIntent;
+  }
+
+  void onLoginSuccess(Profile socialProfile) {
+    if (userEmitter != null) {
+      Profile copy = new Profile (socialProfile);
+      userEmitter.onNext(copy);
+      userEmitter.onCompleted();
     }
   }
 
-  public User getUserInfo(){
+  void onLoginError(Throwable throwable) {
+    if (userEmitter != null) {
+      Throwable copy = new Throwable(throwable);
+      userEmitter.onError(copy);
+    }
+  }
 
-
-    return this.mUser;
+  void onLoginCancel() {
+    if (userEmitter != null) {
+      userEmitter.onCompleted();
+    }
   }
 }

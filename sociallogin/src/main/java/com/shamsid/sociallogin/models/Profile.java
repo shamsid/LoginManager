@@ -12,19 +12,20 @@ public class Profile implements Serializable ,Cloneable{
   }
   public Profile (){
   }
-  private String id;
   private String userProfileUrl;
   private String accessToken;
   private String emailAddress;
   private String fullName;
+  public String profileId;
 
-  public String getId () {
-    return id;
+  public String getProfileId () {
+    return profileId;
   }
 
-  public void setId (String id) {
-    this.id = id;
+  public void setProfileId (String profileId) {
+    this.profileId = profileId;
   }
+
 
   public String getEmailAddress () {
     return emailAddress;

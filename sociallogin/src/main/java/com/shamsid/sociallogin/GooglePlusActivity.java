@@ -11,7 +11,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.shamsid.sociallogin.models.User;
+import com.shamsid.sociallogin.models.Profile;
 import com.shamsid.sociallogin.utils.Helper;
 
 public class GooglePlusActivity extends FragmentActivity implements
@@ -57,17 +57,17 @@ public class GooglePlusActivity extends FragmentActivity implements
     if(result.isSuccess ()){
 
       GoogleSignInAccount googleSignInAccount =result.getSignInAccount ();
-      User userInformation = new User ();
-      userInformation.setFullName (googleSignInAccount.getDisplayName ());
-      userInformation.setEmailAddress (googleSignInAccount.getEmail ());
-      userInformation.setId (googleSignInAccount.getId ());
-      userInformation.setUserProfileUrl (googleSignInAccount.getPhotoUrl ()!= null ?
+      Profile profileInformation = new Profile ();
+      profileInformation.setFullName (googleSignInAccount.getDisplayName ());
+      profileInformation.setEmailAddress (googleSignInAccount.getEmail ());
+      profileInformation.setProfileId (googleSignInAccount.getId ());
+      profileInformation.setUserProfileUrl (googleSignInAccount.getPhotoUrl ()!= null ?
           googleSignInAccount.getPhotoUrl ().toString ():"");
-      userInformation.setAccessToken (googleSignInAccount.getIdToken ());
-      com.shamsid.sociallogin.LoginManager.getInstance (this).setUserInfo (userInformation);
+      profileInformation.setAccessToken (googleSignInAccount.getIdToken ());
+      com.shamsid.sociallogin.LoginManager.getInstance (this).onLoginSuccess (profileInformation);
 
     }else{
-      throw new GooglePlusSignInError ();
+      com.shamsid.sociallogin.LoginManager.getInstance (this).onLoginError (new GooglePlusSignInError ());
     }
     finish ();
   }
