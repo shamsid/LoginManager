@@ -27,6 +27,7 @@ dependencies {
 	        compile 'com.github.shamsid:LoginManager:{$latest-version}'
 	}
 ```
+
 ### Usage 
 Let see how to set up the social login .
 
