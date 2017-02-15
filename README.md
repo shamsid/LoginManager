@@ -83,6 +83,7 @@ dependencies {
 
 #### Step 2:
 - Intialise the Login Manager in Application Class
+
 ```java 
 public class App extends Application {
 
