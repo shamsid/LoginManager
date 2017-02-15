@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import com.facebook.FacebookSdk;
 import com.shamsid.sociallogin.models.Profile;
 import com.shamsid.sociallogin.utils.Helper;
@@ -21,7 +20,7 @@ public  class LoginManager {
 
   private Profile mProfile = null;
   private String clientId;
-  private PublishSubject<Profile> userEmitter;
+  private PublishSubject<Profile> mProfilePublishSubject;
 
   public String getClientSecretId () {
     return clientSecretId;
@@ -66,9 +65,9 @@ public  class LoginManager {
   }
 
   public Observable<Profile> login () throws SocialPlatformNotFound {
-    userEmitter = PublishSubject.create ();
+    mProfilePublishSubject = PublishSubject.create ();
     mAppContext.startActivity (getIntent ());
-    return userEmitter;
+    return mProfilePublishSubject;
   }
 
   private Intent getIntent ()  throws SocialPlatformNotFound{
@@ -105,23 +104,23 @@ public  class LoginManager {
   }
 
   void onLoginSuccess(Profile socialProfile) {
-    if (userEmitter != null) {
+    if (mProfilePublishSubject != null) {
       Profile copy = new Profile (socialProfile);
-      userEmitter.onNext(copy);
-      userEmitter.onCompleted();
+      mProfilePublishSubject.onNext(copy);
+      mProfilePublishSubject.onCompleted();
     }
   }
 
   void onLoginError(Throwable throwable) {
-    if (userEmitter != null) {
+    if (mProfilePublishSubject != null) {
       Throwable copy = new Throwable(throwable);
-      userEmitter.onError(copy);
+      mProfilePublishSubject.onError(copy);
     }
   }
 
   void onLoginCancel() {
-    if (userEmitter != null) {
-      userEmitter.onCompleted();
+    if (mProfilePublishSubject != null) {
+      mProfilePublishSubject.onCompleted();
     }
   }
 }
