@@ -82,7 +82,7 @@ dependencies {
 - Nothing to add
 
 #### Step 2:
-- Intialise the Login Manager in Application Class
+- Intialise the Login Manager in Application Class.
 
 ```java 
 public class App extends Application {
@@ -93,7 +93,9 @@ public class App extends Application {
   }
 }
 ```
+
 #### Step 3:
+- Add the following code to Activity to which you want to use.
 
 ```java
 public class LoginManagerActivity extends Activity {
