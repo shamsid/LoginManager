@@ -1,12 +1,10 @@
-###Login Manager
-
+### Login Manager
 [![Release](https://jitpack.io/v/shamsid/LoginManager.svg)](https://jitpack.io/#shamsid/LoginManager)
 
 This android library will reduce the boiler plate code while using social logins in Android Application.
 
 #### Setup 
 To use this library your minSdkVersion should be 16 or above.
-
 - In your project level build.gradle file add the following code
 
 ```java
@@ -16,43 +14,52 @@ allprojects {
         maven { url "https://jitpack.io" }
     }
 }
+dependencies {
+    classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+}
 ```
 
 - In your app level build.gradle file add this line
-
 ```java
+apply plugin: 'me.tatarka.retrolambda'
 dependencies {
-	        compile 'com.github.shamsid:LoginManager:v1'
+	        compile 'com.github.shamsid:LoginManager:{$latest-version}'
 	}
 ```
+### Usage 
 
-###Usage 
+#### Step 1:
+- You must setup the AndroidManifest.xml for social login which you want to use.
+```xml 
+<uses-permission android:name="android.permission.INTERNET"/>
+```
+1. Facebook
 
-####Step 1:
-You must setup the AndroidManifest.xml for facebook and google login to use this library
-
-#####Facebook Login
 ```xml
+
 <meta-data android:name="com.facebook.sdk.ApplicationId"
 				android:value="@string/facebook_app_id"/>
-<activity android:name="com.facebook.FacebookActivity"
+<activity
+				android:name="com.facebook.FacebookActivity"
 				android:configChanges=
 						"keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-				android:label="@string/app_name" />
-
-
+				android:label="@string/app_name"/>
+		
 		<activity
 				android:name="com.facebook.CustomTabActivity"
 				android:exported="true">
 			<intent-filter>
-				<action android:name="android.intent.action.VIEW" />
-				<category android:name="android.intent.category.DEFAULT" />
-				<category android:name="android.intent.category.BROWSABLE" />
-				<data android:scheme="@string/fb_login_protocol_scheme" />
+				<action android:name="android.intent.action.VIEW"/>
+
+				<category android:name="android.intent.category.DEFAULT"/>
+				<category android:name="android.intent.category.BROWSABLE"/>
+
+				<data android:scheme="@string/fb_login_protocol_scheme"/>
 			</intent-filter>
 		</activity>
 ```
-#####Google Login
+
+2. Google Login
 
 - Put your `google-services.json` under `app` directory which can created by using this link [`google-serices.json`](https://developers.google.com/mobile/add?platform=android&cntapi=signin&cntapp=Default%20Demo%20App&cntpkg=com.google.samples.quickstart.signin&cnturl=https:%2F%2Fdevelopers.google.com%2Fidentity%2Fsign-in%2Fandroid%2Fstart%3Fconfigured%3Dtrue&cntlbl=Continue%20with%20Try%20Sign-In)
 
@@ -60,8 +67,19 @@ You must setup the AndroidManifest.xml for facebook and google login to use this
 
 - Add `apply plugin: 'com.google.gms.google-services'` in your app level build.gradle
 
-####Step 2:
+3. Twitter 
 
+```xml 
+
+<meta-data android:name="io.fabric.ApiKey"
+				android:value="@string/fabric_api"
+				/>
+```
+4.LinkedIn
+- Nothing to add
+
+#### Step 2:
+- Intialise the Login Manager in Application Class
 ```java 
 public class App extends Application {
 
@@ -71,11 +89,11 @@ public class App extends Application {
   }
 }
 ```
-####Step 3:
+#### Step 3:
 
 ```java
 public class LoginManagerActivity extends Activity {
-
+ 
   String TAG = LoginManagerActivity.class.getName ();
 
   @Override protected void onCreate (Bundle savedInstanceState) {
@@ -191,7 +209,7 @@ public class LoginManagerActivity extends Activity {
   
 ```
 
-##License
+## License
 
 ```
 MIT License
