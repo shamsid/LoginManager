@@ -92,8 +92,8 @@ public class App extends Application {
   }
 }
 ```
-#### Step 3:
 
+#### Step 3:
 ```java
 public class LoginManagerActivity extends Activity {
  
