@@ -1,7 +1,9 @@
 ###Login Manager
+
 [![Release](https://jitpack.io/v/shamsid/LoginManager.svg)](https://jitpack.io/#shamsid/LoginManager)
 
 This android library will reduce the boiler plate code while using social logins in Android Application.
+
 #### Setup 
 To use this library your minSdkVersion should be 16 or above.
 
@@ -25,8 +27,10 @@ dependencies {
 ```
 
 ###Usage 
+
 ####Step 1:
-You must setup the AndroidManifest.xml for facebook and google login to use this libraryadfdi
+You must setup the AndroidManifest.xml for facebook and google login to use this library
+
 #####Facebook Login
 ```xml
 <meta-data android:name="com.facebook.sdk.ApplicationId"
@@ -49,8 +53,11 @@ You must setup the AndroidManifest.xml for facebook and google login to use this
 		</activity>
 ```
 #####Google Login
+
 - Put your `google-services.json` under `app` directory which can created by using this link [`google-serices.json`](https://developers.google.com/mobile/add?platform=android&cntapi=signin&cntapp=Default%20Demo%20App&cntpkg=com.google.samples.quickstart.signin&cnturl=https:%2F%2Fdevelopers.google.com%2Fidentity%2Fsign-in%2Fandroid%2Fstart%3Fconfigured%3Dtrue&cntlbl=Continue%20with%20Try%20Sign-In)
+
 - Add `classpath 'com.google.gms:google-services:3.0.0'` in your project level build.gradle.
+
 - Add `apply plugin: 'com.google.gms.google-services'` in your app level build.gradle
 
 ####Step 2:
@@ -65,17 +72,17 @@ public class App extends Application {
 }
 ```
 ####Step 3:
+
 ```java
 public class LoginManagerActivity extends Activity {
 
-  LoginManager loginManager;
+  String TAG = LoginManagerActivity.class.getName ();
 
   @Override protected void onCreate (Bundle savedInstanceState) {
     super.onCreate (savedInstanceState);
     setContentView (R.layout.activity_login_manager);
     findViewById (R.id.tv_facebook).setOnClickListener (new View.OnClickListener () {
       @Override public void onClick (View v) {
-    
         loginFacebook();
       }
     });
@@ -85,41 +92,107 @@ public class LoginManagerActivity extends Activity {
       }
     });
 
+    findViewById (R.id.tv_twitter).setOnClickListener (new View.OnClickListener () {
+      @Override public void onClick (View v) {
+        loginTwitter ();
+      }
+    });
+
+    findViewById (R.id.tv_linkedIn).setOnClickListener (new View.OnClickListener () {
+      @Override public void onClick (View v) {
+        loginLinkedIn ();
+      }
+    });
+
 
   }
 
-   private void loginFacebook(){
+  private void loginFacebook(){
+
     try {
+      LoginManager.getInstance (this)
+          .choose (Platforms.FACEBOOK)
+          .login ()
+          .subscribe (socialUser -> {
+            Intent intent = new Intent (LoginManagerActivity.this,InfoActivity.class);
+            intent.putExtra ("name",socialUser.getFullName ());
+            intent.putExtra ("profile_url",socialUser.getUserProfileUrl ());
+            startActivity (intent);
 
-      loginManager = LoginManager.getInstance (this).choose (Platforms.FACEBOOK).login ();
-
-      Log.v ("name", loginManager.getUserInfo ().getFullName ());
-      Log.v ("profile_url", loginManager.getUserInfo ().getUserProfileUrl ());
-      Log.v ("name", loginManager.getUserInfo ().getEmailAddress ());
-      Log.v ("name", loginManager.getUserInfo ().getId ());
-    }catch (SocialPlatformNotFound error ){
-      error.printStackTrace ();
+          }, error -> {
+            Log.d (TAG, "error: " + error.getMessage ());
+          });
+    }catch (SocialPlatformNotFound spf){
+      spf.printStackTrace ();
     }
+
   }
 
   private void loginGooglePlus(){
     try {
-      loginManager = LoginManager.getInstance (this)
-          .setClientId (getResources ().getString (R.string.google_app_id))
+      LoginManager.getInstance (this)
           .choose (Platforms.GOOGLE_PLUS)
-          .login ();
-
-      Log.v ("name", loginManager.getUserInfo ().getFullName ());
-      Log.v ("profile_url", loginManager.getUserInfo ().getUserProfileUrl ());
-      Log.v ("name", loginManager.getUserInfo ().getEmailAddress ());
-      Log.v ("name", loginManager.getUserInfo ().getId ());
-    }catch (SocialPlatformNotFound error){
-      error.printStackTrace ();
+          .setClientId (getString (R.string.google_app_id))
+          .login ()
+          .subscribe (socialUser -> {
+            Intent intent = new Intent (LoginManagerActivity.this,InfoActivity.class);
+            intent.putExtra ("name",socialUser.getFullName ());
+            intent.putExtra ("profile_url",socialUser.getUserProfileUrl ());
+            startActivity (intent);
+          }, error -> {
+            Log.d (TAG, "error: " + error.getMessage ());
+          });
+    }catch (SocialPlatformNotFound spf){
+      spf.printStackTrace ();
     }
   }
+
+  private void loginTwitter(){
+
+    try {
+      LoginManager.getInstance (this)
+          .choose (Platforms.TWITTER)
+          .setClientId (getString (R.string.twitter_public))
+          .setClientSecretId (getString (R.string.twitter_secret))
+          .login ()
+          .subscribe (socialUser -> {
+            Intent intent = new Intent (LoginManagerActivity.this,InfoActivity.class);
+            intent.putExtra ("name",socialUser.getFullName ());
+            intent.putExtra ("profile_url",socialUser.getUserProfileUrl ());
+            startActivity (intent);
+          }, error -> {
+            Log.d (TAG, "error: " + error.getMessage ());
+          });
+    }catch (SocialPlatformNotFound spf){
+      spf.printStackTrace ();
+    }
+  }
+
+  private void loginLinkedIn(){
+
+    try{
+      LoginManager.getInstance (this)
+          .choose (Platforms.LINKEDIN)
+          .login ()
+          .subscribe (socialUser -> {
+            Intent intent = new Intent (LoginManagerActivity.this,InfoActivity.class);
+            intent.putExtra ("name",socialUser.getFullName ());
+            intent.putExtra ("profile_url",socialUser.getUserProfileUrl ());
+            startActivity (intent);
+          }, error -> {
+            Log.d (TAG, "error: " + error.getMessage ());
+          });
+    }catch (SocialPlatformNotFound spf){
+      spf.printStackTrace ();
+    }
+  }
+
+}
   
 ```
+
 ##License
+
 ```
 MIT License
 
