@@ -3,6 +3,7 @@ package com.shamsid.sociallogin;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+/*
 import android.util.Log;
 import com.linkedin.platform.APIHelper;
 import com.linkedin.platform.LISessionManager;
@@ -86,3 +87,4 @@ public class LinkedInActivity extends Activity {
 
 
 }
+*/
