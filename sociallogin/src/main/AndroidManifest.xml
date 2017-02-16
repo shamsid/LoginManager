@@ -8,6 +8,7 @@
 			android:supportsRtl="true"
 	>
 
+
 		<activity android:name=".FacebookActivity"
 				android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"/>
 		<activity android:name=".GooglePlusActivity"

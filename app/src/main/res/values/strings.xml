@@ -1,10 +1,11 @@
 <resources>
 	<string name="app_name">LoginManager</string>
-	<string name="facebook_app_id">239900076419469232</string>
+	<string name="facebook_app_id">678345522367978</string>
 
-	<string name="fb_login_protocol_scheme">fb23990007641946329</string>
-	<string name="google_app_id">AIzaSyBb__LIXSFpaDvroDX9q0KhFvOmHGxZ23DmU</string>
-	<string name="twitter_secret">PnENxA7aQOrEcoecfue2E1VCp5I8Ommeof1yUul23xl8pmvB1mCp</string>
-	<string name="twitter_public">gIGRRwva89ZnnA23tqi5tKh0RAJ</string>
-	<string name="fabric_api">02d075978b004243da9230ff22877829b01bbfe95</string>
+	<string name="fb_login_protocol_scheme">fb678345522367978</string>
+
+	<string name="google_app_id">AIzaSyBb__LIXSFpaDvroDX9q0KhFvOmHGxZDmU</string>
+	<string name="twitter_secret">PnENxA7aQOrEcoecfue2E1VCp5I8Ommeof1yUulxl8pmvB1mCp</string>
+	<string name="twitter_public">gIGRRwva89ZnnAtqi5tKh0RAJ</string>
+	<string name="fabric_api">02d075978b004243da9230ff2877829b01bbfe95</string>
 </resources>
