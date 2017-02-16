@@ -83,6 +83,7 @@ Let see how to set up the social login .
 				/>
 ```
 - Add these lines build.gradle at App level 
+
 ```xml
 buildscript {
   repositories {
@@ -116,9 +117,7 @@ repositories {
 ```java
 apply plugin: 'io.fabric'
 apply plugin: 'me.tatarka.retrolambda'
-```
-
-```java 
+ 
 android {
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_8
