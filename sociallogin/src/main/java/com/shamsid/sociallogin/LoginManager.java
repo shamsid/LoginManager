@@ -92,10 +92,10 @@ public  class LoginManager {
         socialIntent.putExtra (Helper.TWITTER_CLIENT_SECRET,getClientSecretId());
         break;
 
-      //case LINKEDIN:
-        //socialIntent = new Intent (mAppContext,LinkedInActivity.class);
-        //socialIntent.addFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
-        //break;
+      case LINKEDIN:
+        socialIntent = new Intent (mAppContext,LinkedInActivity.class);
+        socialIntent.addFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
+        break;
 
       default:
         throw new SocialPlatformNotFound ();
