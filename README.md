@@ -74,6 +74,7 @@ Let see how to set up the social login .
 - Add `apply plugin: 'com.google.gms.google-services'` in your app level build.gradle
 
 3. Twitter 
+- Add this following line to AndroidManifest.xml
 
 ```xml 
 
@@ -81,8 +82,50 @@ Let see how to set up the social login .
 				android:value="@string/fabric_api"
 				/>
 ```
-4.LinkedIn
-- Nothing to add
+- Add these lines build.gradle at App level 
+```xml
+buildscript {
+  repositories {
+    maven { url 'https://maven.fabric.io/public' }
+  }
+
+  dependencies {
+    classpath 'io.fabric.tools:gradle:1.+'
+
+  }
+}
+
+repositories {
+  maven { url 'https://maven.fabric.io/public' }
+}
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath 'me.tatarka:gradle-retrolambda:3.5.0'
+  }
+}
+
+repositories {
+  mavenCentral()
+}
+```
+
+```java
+apply plugin: 'io.fabric'
+apply plugin: 'me.tatarka.retrolambda'
+```
+
+```java 
+android {
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
+```
 
 #### Step 2:
 - Intialise the Login Manager in Application Class.
@@ -124,13 +167,6 @@ public class LoginManagerActivity extends Activity {
         loginTwitter ();
       }
     });
-
-    findViewById (R.id.tv_linkedIn).setOnClickListener (new View.OnClickListener () {
-      @Override public void onClick (View v) {
-        loginLinkedIn ();
-      }
-    });
-
 
   }
 
@@ -181,25 +217,6 @@ public class LoginManagerActivity extends Activity {
           .choose (Platforms.TWITTER)
           .setClientId (getString (R.string.twitter_public))
           .setClientSecretId (getString (R.string.twitter_secret))
-          .login ()
-          .subscribe (socialUser -> {
-            Intent intent = new Intent (LoginManagerActivity.this,InfoActivity.class);
-            intent.putExtra ("name",socialUser.getFullName ());
-            intent.putExtra ("profile_url",socialUser.getUserProfileUrl ());
-            startActivity (intent);
-          }, error -> {
-            Log.d (TAG, "error: " + error.getMessage ());
-          });
-    }catch (SocialPlatformNotFound spf){
-      spf.printStackTrace ();
-    }
-  }
-
-  private void loginLinkedIn(){
-
-    try{
-      LoginManager.getInstance (this)
-          .choose (Platforms.LINKEDIN)
           .login ()
           .subscribe (socialUser -> {
             Intent intent = new Intent (LoginManagerActivity.this,InfoActivity.class);

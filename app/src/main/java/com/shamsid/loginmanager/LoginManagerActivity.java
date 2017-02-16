@@ -33,12 +33,6 @@ public class LoginManagerActivity extends Activity {
       }
     });
 
-    findViewById (R.id.tv_linkedIn).setOnClickListener (new View.OnClickListener () {
-      @Override public void onClick (View v) {
-        loginLinkedIn ();
-      }
-    });
-
 
   }
 
@@ -102,24 +96,4 @@ public class LoginManagerActivity extends Activity {
       spf.printStackTrace ();
     }
   }
-
-  private void loginLinkedIn(){
-
-    try{
-      LoginManager.getInstance (this)
-          .choose (Platforms.LINKEDIN)
-          .login ()
-          .subscribe (socialUser -> {
-            Intent intent = new Intent (LoginManagerActivity.this,InfoActivity.class);
-            intent.putExtra ("name",socialUser.getFullName ());
-            intent.putExtra ("profile_url",socialUser.getUserProfileUrl ());
-            startActivity (intent);
-          }, error -> {
-            Log.d (TAG, "error: " + error.getMessage ());
-          });
-    }catch (SocialPlatformNotFound spf){
-      spf.printStackTrace ();
-    }
-  }
-
 }
