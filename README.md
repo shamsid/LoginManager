@@ -24,7 +24,7 @@ dependencies {
 ```java
 apply plugin: 'me.tatarka.retrolambda'
 dependencies {
-	        compile 'com.github.shamsid:LoginManager:{$latest-version}'
+	       compile 'com.github.shamsid:LoginManager:v1.2.8'
 	}
 ```
 
